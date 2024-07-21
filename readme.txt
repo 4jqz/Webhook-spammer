@@ -9,4 +9,4 @@ downloading the required packages (open source)
 and also the whole thing is open source so dont dm me saying "why are you sending rats" its
 open source, if you don't want to run it I don't care don't run it
 
-Also dont skid it or else ur a fag
+skid if ur a fag
