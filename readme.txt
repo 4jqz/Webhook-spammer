@@ -10,3 +10,6 @@ and also the whole thing is open source so dont dm me saying "why are you sendin
 open source, if you don't want to run it I don't care don't run it
 
 skid if ur a fag
+
+
+credits to https://github.com/TaxMachine for the spammer
