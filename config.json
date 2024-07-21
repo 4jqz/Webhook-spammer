@@ -1,0 +1,32 @@
+{
+    "deletemessage": {
+        "content": ":clown: @everyone :clown:",
+        "embeds": [
+            {
+                "title": "ayy lmao looks like your webhook got deleted",
+                "description": "lmao nerd you thought https://discord.gg/bV4hSp84Ay https://discord.gg/KKCkrcR8Ud :nerd:",
+                "color": 16711680,
+                "author": {
+                    "name": "Vein runs you",
+                    "url": "https://github.com/VeinsWorld/deobf"
+                }
+            }
+        ]
+    },
+    "spammessage": {
+        "content": "@everyone",
+        "embeds": [
+            {
+                "title": "Your obfuscation sucks and you should reconsider your life choices",
+                "description": "lmfao fucking nerd https://discord.gg/bV4hSp84Ay https://discord.gg/KKCkrcR8Ud :nerd:",
+                "color":16777215,
+                "author": {
+                    "name": "https://discord.gg/bV4hSp84Ay https://discord.gg/KKCkrcR8Ud",
+                    "url": "https://github.com/VeinsWorld/deobf"
+                }
+            }
+        ]
+    },
+    "deleteafterdeobf": false,
+    "telegram_message": "test"
+}
