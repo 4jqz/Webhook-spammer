@@ -58,7 +58,7 @@ class Webhook:
 class WebhookManagerGUI:
     def __init__(self, master):
         self.master = master
-        master.title("Veins Webhook Manager")
+        master.title("4jqz's Webhook Manager")
         master.iconbitmap('icon.ico')  
 
         # Input fields
