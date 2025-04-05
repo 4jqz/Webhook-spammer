@@ -61,13 +61,11 @@ class WebhookManagerGUI:
         master.title("4jqz's Webhook Manager")
         master.iconbitmap('icon.ico')  
 
-        # Input fields
         self.webhook_label = tk.Label(master, text="Webhook URL:")
         self.webhook_label.grid(row=0, column=0, padx=5, pady=5)
         self.webhook_entry = tk.Entry(master, width=50)
         self.webhook_entry.grid(row=0, column=1, padx=5, pady=5)
 
-        # Buttons
         self.send_button = tk.Button(master, text="Send", command=self.send_webhook)
         self.send_button.grid(row=1, column=0, padx=5, pady=5)
 
@@ -77,7 +75,6 @@ class WebhookManagerGUI:
         self.get_info_button = tk.Button(master, text="Get Info", command=self.get_webhook_info)
         self.get_info_button.grid(row=1, column=2, padx=5, pady=5)
 
-        # Output area
         self.output_text = tk.Text(master, wrap=tk.WORD, height=10)
         self.output_text.grid(row=2, columnspan=3, padx=5, pady=5)
 
@@ -116,7 +113,6 @@ class WebhookManagerGUI:
         else:
             messagebox.showerror("Error", "Please enter a webhook URL")
 
-# Create the main window
 if __name__ == "__main__":
     root = tk.Tk()
     app = WebhookManagerGUI(root)
