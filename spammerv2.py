@@ -10,7 +10,14 @@ import os
 class Config:
     @staticmethod
     def getConfig():
-        with open(os.path.join(os.path.dirname(__file__), 'config.json')) as f:
+        try:
+            base_dir = os.path.dirname(os.path.abspath(__file__))
+        except NameError:
+            base_dir = os.getcwd()
+        config_path = os.path.join(base_dir, 'config.json')
+        if not os.path.exists(config_path):
+            raise FileNotFoundError("config.json not found")
+        with open(config_path) as f:
             return json.load(f)
 
 class Webhook:
@@ -35,31 +42,34 @@ class Webhook:
             raise IOError("Invalid webhook")
         while True:
             r = requests.post(self.webhook, headers={"Content-Type": "application/json"}, json=self.config["spammessage"])
-            match r.status_code:
-                case 429:
-                    print("[-] Rate limited, waiting 5 seconds")
-                    output_text.insert(tk.END, "[-] Rate limited, waiting 5 seconds\n")
-                    time.sleep(5)
-                case 404:
-                    print("[-] Webhook got deleted")
-                    output_text.insert(tk.END, "[-] Webhook got deleted\n")
-                    sys.exit(0)
-                case 200:
-                    output_text.insert(tk.END, "Webhook sent successfully\n")
+            if r.status_code == 429:
+                self._insert_text(output_text, "[-] Rate limited, waiting 5 seconds\n")
+                time.sleep(5)
+            elif r.status_code == 404:
+                self._insert_text(output_text, "[-] Webhook got deleted\n")
+                break
+            elif r.status_code == 200:
+                self._insert_text(output_text, "Webhook sent successfully\n")
 
     def GetInformations(self, output_text):
         if not self.CheckValid(self.webhook):
             raise IOError("Invalid token")
         r = requests.get(self.webhook)
         payload = r.json()
-        self.name = payload["name"]
-        output_text.insert(tk.END, f"Webhook name: {self.name}\n")
+        self.name = payload.get("name", "Unknown")
+        self._insert_text(output_text, f"Webhook name: {self.name}\n")
+
+    def _insert_text(self, widget, text):
+        widget.after(0, widget.insert, tk.END, text)
 
 class WebhookManagerGUI:
     def __init__(self, master):
         self.master = master
         master.title("4jqz's Webhook Manager")
-        master.iconbitmap('icon.ico')  
+        try:
+            master.iconbitmap('icon.ico')
+        except Exception:
+            pass
 
         self.webhook_label = tk.Label(master, text="Webhook URL:")
         self.webhook_label.grid(row=0, column=0, padx=5, pady=5)
@@ -83,7 +93,7 @@ class WebhookManagerGUI:
         if webhook_url:
             try:
                 webhook = Webhook(webhook_url)
-                threading.Thread(target=webhook.SendWebhook, args=(self.output_text,)).start()
+                threading.Thread(target=webhook.SendWebhook, args=(self.output_text,), daemon=True).start()
                 self.output_text.insert(tk.END, f"Webhook spamming started: {webhook_url}\n")
             except IOError as e:
                 self.output_text.insert(tk.END, f"Error: {e}\n")
